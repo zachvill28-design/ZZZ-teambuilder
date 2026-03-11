@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
+
 <head>
+
 <meta charset="UTF-8">
 <title>ZZZ Team Builder</title>
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <style>
 
@@ -11,30 +15,52 @@ font-family:Arial;
 background:#0f172a;
 color:white;
 text-align:center;
-padding:30px;
+padding:20px;
+}
+
+h1{
+margin-bottom:20px;
+}
+
+.grid{
+display:flex;
+justify-content:center;
+gap:20px;
+margin-bottom:20px;
+}
+
+.character{
+background:#1e293b;
+padding:15px;
+border-radius:10px;
+}
+
+img{
+width:120px;
+border-radius:10px;
 }
 
 select{
-padding:10px;
-margin:10px;
-font-size:16px;
+padding:8px;
+margin-top:10px;
 }
 
 button{
+margin-top:20px;
 padding:12px 25px;
 background:#22c55e;
 border:none;
+border-radius:10px;
 color:white;
 font-size:16px;
 cursor:pointer;
-border-radius:10px;
 }
 
 .card{
-margin-top:25px;
+margin-top:30px;
 background:#1e293b;
 padding:20px;
-border-radius:10px;
+border-radius:12px;
 }
 
 </style>
@@ -45,58 +71,106 @@ border-radius:10px;
 
 <h1>Zenless Zone Zero Team Builder</h1>
 
-<select id="c1">
-<option>Ye Shunguang</option>
-<option>Pulchra</option>
-<option>Sunniva</option>
-<option>Anby</option>
-<option>Soldier 11</option>
-<option>Lucy</option>
-<option>Anton</option>
-<option>Piper</option>
-<option>Grace</option>
-</select>
+<div class="grid">
 
-<select id="c2">
-<option>Pulchra</option>
-<option>Sunniva</option>
-<option>Anby</option>
-<option>Lucy</option>
-<option>Anton</option>
-</select>
-
-<select id="c3">
-<option>Sunniva</option>
-<option>Pulchra</option>
-<option>Anby</option>
-<option>Lucy</option>
-<option>Anton</option>
-</select>
-
+<div class="character">
+<img id="img1">
 <br>
+<select id="c1"></select>
+</div>
+
+<div class="character">
+<img id="img2">
+<br>
+<select id="c2"></select>
+</div>
+
+<div class="character">
+<img id="img3">
+<br>
+<select id="c3"></select>
+</div>
+
+</div>
 
 <button onclick="build()">Créer Team</button>
 
 <div class="card">
+
 <div id="team"></div>
 <div id="score"></div>
+<div id="meta"></div>
+
 </div>
 
 <script>
 
+const characters={
+
+"Ye Shunguang":"https://i.imgur.com/M7K8K9H.png",
+"Pulchra":"https://i.imgur.com/yU8W0tE.png",
+"Sunniva":"https://i.imgur.com/XM3P9xE.png",
+"Anby":"https://i.imgur.com/Zm4K8eF.png",
+"Soldier 11":"https://i.imgur.com/3K0Qk7I.png",
+"Lucy":"https://i.imgur.com/mxwVtFy.png",
+"Anton":"https://i.imgur.com/8l2IuBd.png",
+"Piper":"https://i.imgur.com/HZy2G2M.png",
+"Grace":"https://i.imgur.com/RxXH0rI.png"
+
+}
+
+function populate(){
+
+for(let id of ["c1","c2","c3"]){
+
+let select=document.getElementById(id)
+
+for(let char in characters){
+
+select.add(new Option(char,char))
+
+}
+
+}
+
+updateImages()
+
+}
+
+populate()
+
+function updateImages(){
+
+img1.src=characters[c1.value]
+img2.src=characters[c2.value]
+img3.src=characters[c3.value]
+
+}
+
+c1.onchange=updateImages
+c2.onchange=updateImages
+c3.onchange=updateImages
+
 function build(){
 
-let a=document.getElementById("c1").value
-let b=document.getElementById("c2").value
-let c=document.getElementById("c3").value
+let a=c1.value
+let b=c2.value
+let c=c3.value
 
 let score=50
 
-if(a=="Ye Shunguang" && b=="Pulchra") score+=20
-if(c=="Sunniva") score+=10
+if(a==="Ye Shunguang" && b==="Pulchra") score+=20
+if(c==="Sunniva") score+=10
 
-document.getElementById("team").innerHTML="Team : "+a+" + "+b+" + "+c
-document.getElementById("score").innerHTML="Score synergie : "+score+"/100"
+team.innerHTML="Equipe : "+a+" + "+b+" + "+c
+score.innerHTML="Score : "+score+"/100"
+
+let meta="Equipe correcte"
+
+if(score>=80) meta="🔥 META TEAM"
+else if(score>=65) meta="⭐ Très bonne team"
+
+document.getElementById("meta").innerHTML=meta
 
 }
 
