@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ZZZ Team Builder</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+text-align:center;
+padding:30px;
+}
+
+select{
+padding:10px;
+margin:10px;
+font-size:16px;
+}
+
+button{
+padding:12px 25px;
+background:#22c55e;
+border:none;
+color:white;
+font-size:16px;
+cursor:pointer;
+border-radius:10px;
+}
+
+.card{
+margin-top:25px;
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Zenless Zone Zero Team Builder</h1>
+
+<select id="c1">
+<option>Ye Shunguang</option>
+<option>Pulchra</option>
+<option>Sunniva</option>
+<option>Anby</option>
+<option>Soldier 11</option>
+<option>Lucy</option>
+<option>Anton</option>
+<option>Piper</option>
+<option>Grace</option>
+</select>
+
+<select id="c2">
+<option>Pulchra</option>
+<option>Sunniva</option>
+<option>Anby</option>
+<option>Lucy</option>
+<option>Anton</option>
+</select>
+
+<select id="c3">
+<option>Sunniva</option>
+<option>Pulchra</option>
+<option>Anby</option>
+<option>Lucy</option>
+<option>Anton</option>
+</select>
+
+<br>
+
+<button onclick="build()">Créer Team</button>
+
+<div class="card">
+<div id="team"></div>
+<div id="score"></div>
+</div>
+
+<script>
+
+function build(){
+
+let a=document.getElementById("c1").value
+let b=document.getElementById("c2").value
+let c=document.getElementById("c3").value
+
+let score=50
+
+if(a=="Ye Shunguang" && b=="Pulchra") score+=20
+if(c=="Sunniva") score+=10
+
+document.getElementById("team").innerHTML="Team : "+a+" + "+b+" + "+c
+document.getElementById("score").innerHTML="Score synergie : "+score+"/100"
+
+}
+
+</script>
+
+</body>
+</html>
