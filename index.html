@@ -2,16 +2,15 @@
 <html lang="fr">
 
 <head>
-
 <meta charset="UTF-8">
-<title>ZZZ Team Builder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZZZ Team Builder</title>
 
 <style>
 
 body{
-font-family:Arial;
+font-family: Arial, sans-serif;
 background:#0f172a;
 color:white;
 text-align:center;
@@ -19,40 +18,42 @@ padding:20px;
 }
 
 h1{
-margin-bottom:20px;
+margin-bottom:25px;
 }
 
 .grid{
 display:flex;
 justify-content:center;
 gap:20px;
-margin-bottom:20px;
+flex-wrap:wrap;
 }
 
 .character{
 background:#1e293b;
 padding:15px;
 border-radius:10px;
+width:150px;
 }
 
 img{
-width:120px;
-border-radius:10px;
+width:100%;
+border-radius:8px;
 }
 
 select{
-padding:8px;
 margin-top:10px;
+padding:6px;
+width:100%;
 }
 
 button{
-margin-top:20px;
+margin-top:25px;
 padding:12px 25px;
 background:#22c55e;
 border:none;
-border-radius:10px;
-color:white;
+border-radius:8px;
 font-size:16px;
+color:white;
 cursor:pointer;
 }
 
@@ -60,11 +61,10 @@ cursor:pointer;
 margin-top:30px;
 background:#1e293b;
 padding:20px;
-border-radius:12px;
+border-radius:10px;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -74,26 +74,23 @@ border-radius:12px;
 <div class="grid">
 
 <div class="character">
-<img id="img1">
-<br>
+<img id="img1" src="">
 <select id="c1"></select>
 </div>
 
 <div class="character">
-<img id="img2">
-<br>
+<img id="img2" src="">
 <select id="c2"></select>
 </div>
 
 <div class="character">
-<img id="img3">
-<br>
+<img id="img3" src="">
 <select id="c3"></select>
 </div>
 
 </div>
 
-<button onclick="build()">Créer Team</button>
+<button id="buildBtn">Créer Team</button>
 
 <div class="card">
 
@@ -105,74 +102,77 @@ border-radius:12px;
 
 <script>
 
-const characters={
+const characters = {
 
-"Ye Shunguang":"https://i.imgur.com/M7K8K9H.png",
-"Pulchra":"https://i.imgur.com/yU8W0tE.png",
-"Sunniva":"https://i.imgur.com/XM3P9xE.png",
-"Anby":"https://i.imgur.com/Zm4K8eF.png",
-"Soldier 11":"https://i.imgur.com/3K0Qk7I.png",
-"Lucy":"https://i.imgur.com/mxwVtFy.png",
-"Anton":"https://i.imgur.com/8l2IuBd.png",
-"Piper":"https://i.imgur.com/HZy2G2M.png",
-"Grace":"https://i.imgur.com/RxXH0rI.png"
+"Ye Shunguang":"https://via.placeholder.com/120",
+"Pulchra":"https://via.placeholder.com/120",
+"Sunniva":"https://via.placeholder.com/120",
+"Anby":"https://via.placeholder.com/120",
+"Soldier 11":"https://via.placeholder.com/120",
+"Lucy":"https://via.placeholder.com/120",
+"Anton":"https://via.placeholder.com/120"
 
-}
+};
+
+const select1 = document.getElementById("c1");
+const select2 = document.getElementById("c2");
+const select3 = document.getElementById("c3");
 
 function populate(){
 
-for(let id of ["c1","c2","c3"]){
+Object.keys(characters).forEach(name => {
 
-let select=document.getElementById(id)
+select1.add(new Option(name,name));
+select2.add(new Option(name,name));
+select3.add(new Option(name,name));
 
-for(let char in characters){
+});
 
-select.add(new Option(char,char))
-
-}
-
-}
-
-updateImages()
+updateImages();
 
 }
-
-populate()
 
 function updateImages(){
 
-img1.src=characters[c1.value]
-img2.src=characters[c2.value]
-img3.src=characters[c3.value]
+document.getElementById("img1").src = characters[select1.value];
+document.getElementById("img2").src = characters[select2.value];
+document.getElementById("img3").src = characters[select3.value];
 
 }
 
-c1.onchange=updateImages
-c2.onchange=updateImages
-c3.onchange=updateImages
+select1.addEventListener("change", updateImages);
+select2.addEventListener("change", updateImages);
+select3.addEventListener("change", updateImages);
 
-function build(){
+document.getElementById("buildBtn").addEventListener("click", buildTeam);
 
-let a=c1.value
-let b=c2.value
-let c=c3.value
+function buildTeam(){
 
-let score=50
+const a = select1.value;
+const b = select2.value;
+const c = select3.value;
 
-if(a==="Ye Shunguang" && b==="Pulchra") score+=20
-if(c==="Sunniva") score+=10
+let score = 50;
 
-team.innerHTML="Equipe : "+a+" + "+b+" + "+c
-score.innerHTML="Score : "+score+"/100"
+if(a==="Ye Shunguang" && b==="Pulchra") score += 20;
+if(c==="Sunniva") score += 10;
 
-let meta="Equipe correcte"
+document.getElementById("team").innerText =
+"Équipe : " + a + " + " + b + " + " + c;
 
-if(score>=80) meta="🔥 META TEAM"
-else if(score>=65) meta="⭐ Très bonne team"
+document.getElementById("score").innerText =
+"Score de synergie : " + score + "/100";
 
-document.getElementById("meta").innerHTML=meta
+let meta = "Équipe correcte";
+
+if(score >= 80) meta = "🔥 META TEAM";
+else if(score >= 65) meta = "⭐ Très bonne team";
+
+document.getElementById("meta").innerText = meta;
 
 }
+
+populate();
 
 </script>
 
